@@ -5,11 +5,11 @@
 
     <groupId>org.springframework.social</groupId>
     <artifactId>spring-social-instagram</artifactId>
-    <version>1.0.5.RELEASE</version>
+    <version>1.1.0.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>Instagram API</name>
-    <url>https://github.com/kevinholcom/spring-social-instagram/</url>
+    <url>https://github.com/gurkein/spring-social-instagram/</url>
 
     <properties>
         <jackson.version>2.5.1</jackson.version>
@@ -40,6 +40,32 @@
                     <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
                 </configuration>
             </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
             <plugin>
                 <groupId>com.github.github</groupId>
                 <artifactId>site-maven-plugin</artifactId>
@@ -53,7 +79,7 @@
                         <include>**/*</include>
                     </includes>
                     <repositoryName>spring-social-instagram</repositoryName>        <!-- github repo name -->
-                    <repositoryOwner>kevinholcom</repositoryOwner>                  <!-- github username -->
+                    <repositoryOwner>gurkein</repositoryOwner>                  <!-- github username -->
                 </configuration>
                 <executions>
                     <!-- run site-maven-plugin's 'site' target as part of 
