@@ -3,10 +3,11 @@
   <groupId>org.springframework.social</groupId>
   <artifactId>spring-social-instagram</artifactId>
   <versioning>
-    <release>1.1.1.RELEASE</release>
+    <release>1.1.2.RELEASE</release>
     <versions>
       <version>1.1.1.RELEASE</version>
+      <version>1.1.2.RELEASE</version>
     </versions>
-    <lastUpdated>20161208150812</lastUpdated>
+    <lastUpdated>20161208184029</lastUpdated>
   </versioning>
 </metadata>
