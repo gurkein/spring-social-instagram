@@ -54,7 +54,6 @@ public class UserTemplate extends AbstractInstagramOperations implements UserOpe
 	@Override
 	public PagedMediaList getRecentMedia(String maxId, String minId) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("count", "33");
 		if (maxId != null)
 			params.put("max_id", maxId);
 		if (minId != null)
@@ -70,7 +69,6 @@ public class UserTemplate extends AbstractInstagramOperations implements UserOpe
 	@Override
 	public PagedMediaList getRecentMedia(long userId, String maxId, String minId) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("count", "33");
 		if (maxId != null)
 			params.put("max_id", maxId);
 		if (minId != null)

@@ -4,12 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.social.instagram.api.Caption;
-import org.springframework.social.instagram.api.CommentsInfo;
-import org.springframework.social.instagram.api.Image;
-import org.springframework.social.instagram.api.InstagramProfile;
-import org.springframework.social.instagram.api.LikesInfo;
-import org.springframework.social.instagram.api.Location;
+import com.github.jonpeterson.jackson.module.interceptor.JsonInterceptors;
+import org.springframework.social.instagram.api.*;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,9 +13,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-abstract class MediaMixin {
+@JsonInterceptors(beforeDeserialization = RawJsonDeserializationInterceptor.class)
+abstract class MediaMixin extends InstagramObjectMixin {
 	@JsonCreator
-	public MediaMixin(@JsonProperty("id") long id,
+	public MediaMixin(@JsonProperty("id") String id,
 			@JsonProperty("filter") String filter,
 			@JsonProperty("link") String link,
 			@JsonProperty("caption") Caption caption,
@@ -28,6 +25,7 @@ abstract class MediaMixin {
 			@JsonProperty("created_time") @JsonDeserialize(using = InstagramDateDeserializer.class) Date createdTime,
 			@JsonProperty("user_has_liked") boolean userHasLiked,
 			@JsonProperty("images") Map<String, Image> images,
+			@JsonProperty("videos") Map<String, Video> videos,
 			@JsonProperty("tags") List<String> tags,
 			@JsonProperty("likes") LikesInfo likes,
 			@JsonProperty("comments") CommentsInfo comments) {

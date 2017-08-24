@@ -3,6 +3,7 @@ package org.springframework.social.instagram.api.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import com.github.jonpeterson.jackson.module.interceptor.JsonInterceptorModule;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -65,11 +66,6 @@ public class InstagramTemplate extends AbstractOAuth2ApiBinding implements Insta
 		super(accessToken);
 		this.clientId = clientId;
 		this.accessToken = accessToken;
-		MappingJackson2HttpMessageConverter json = new MappingJackson2HttpMessageConverter();
-		json.setSupportedMediaTypes(Arrays.asList(new MediaType("text", "javascript")));
-		getRestTemplate().getMessageConverters().add(json);
-		registerInstagramJsonModule(getRestTemplate());
-		getRestTemplate().setErrorHandler(new InstagramErrorHandler());
 
 		tagOperations = new TagTemplate(this, isAuthorizedForUser);
 		locationOperations = new LocationTemplate(this, isAuthorizedForUser);
@@ -77,16 +73,20 @@ public class InstagramTemplate extends AbstractOAuth2ApiBinding implements Insta
 		userOperations = new UserTemplate(this, isAuthorizedForUser);
 	}
 
-	private void registerInstagramJsonModule(RestTemplate restTemplate) {
-		List<HttpMessageConverter<?>> converters = restTemplate.getMessageConverters();
-		for (HttpMessageConverter<?> converter : converters) {
-			if (converter instanceof MappingJackson2HttpMessageConverter) {
-				MappingJackson2HttpMessageConverter jsonConverter = (MappingJackson2HttpMessageConverter) converter;
-				ObjectMapper objectMapper = new ObjectMapper();
-				objectMapper.registerModule(new InstagramModule());
-				jsonConverter.setObjectMapper(objectMapper);
-			}
-		}
+	@Override
+	protected MappingJackson2HttpMessageConverter getJsonMessageConverter() {
+		MappingJackson2HttpMessageConverter converter = super.getJsonMessageConverter();
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new InstagramModule());
+		objectMapper.registerModule(new JsonInterceptorModule());
+		converter.setObjectMapper(objectMapper);
+		// converter.setSupportedMediaTypes(Arrays.asList(new MediaType("application", "json")));
+		return converter;
+	}
+
+	@Override
+	protected void configureRestTemplate(RestTemplate restTemplate) {
+		restTemplate.setErrorHandler(new InstagramErrorHandler());
 	}
 
 	public URIBuilder withAccessToken(String uri) {

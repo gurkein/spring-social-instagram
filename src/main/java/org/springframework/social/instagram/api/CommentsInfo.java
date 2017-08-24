@@ -1,35 +1,30 @@
 package org.springframework.social.instagram.api;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class CommentsInfo implements Serializable {
+public class CommentsInfo {
 
-	private int total;
-	private List<Comment> list;
+    private int total;
+    private List<Comment> list;
 
-	public CommentsInfo() {
+    public CommentsInfo(final int total, final List<Comment> list) {
+        this.total = total;
+        this.list = list;
+    }
 
-	}
+    public int getTotal() {
+        return total;
+    }
 
-	public CommentsInfo(final int total, final List<Comment> list) {
-		this.total = total;
-		this.list = list;
-	}
+    public List<Comment> getList() {
+        return list;
+    }
 
-	public int getTotal() {
-		return total;
-	}
+    public void setTotal(final int total) {
+        this.total = total;
+    }
 
-	public List<Comment> getList() {
-		return list;
-	}
-
-	public void setTotal(final int total) {
-		this.total = total;
-	}
-
-	public void setList(final List<Comment> list) {
-		this.list = list;
-	}
+    public void setList(final List<Comment> list) {
+        this.list = list;
+    }
 }
